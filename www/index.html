@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>饮食记录</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Bootstrap 5 + Flatly 主题 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.3/dist/flatly/bootstrap.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <a class="navbar-brand" href="#">饮食记录</a>
+  </nav>
+  <div class="container mt-3">
+    <!-- 日历视图 -->
+    <div id="calendar-view" class="mb-3"></div>
+    <!-- 当天饮食记录 -->
+    <div id="records-list"></div>
+    <!-- 添加记录按钮 -->
+    <button class="btn btn-success btn-lg rounded-circle position-fixed" id="add-btn" style="bottom:30px;right:30px;z-index:1000;">
+      <span class="bi bi-plus"></span> 添加
+    </button>
+  </div>
+  <!-- 添加/编辑记录模态框 -->
+  <div class="modal fade" id="recordModal" tabindex="-1">
+    <div class="modal-dialog">
+      <form class="modal-content" id="recordForm">
+        <div class="modal-header">
+          <h5 class="modal-title">添加饮食记录</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-2">
+            <label class="form-label">餐别</label>
+            <select class="form-select" id="mealType" required>
+              <option value="早餐">早餐</option>
+              <option value="午餐">午餐</option>
+              <option value="晚餐">晚餐</option>
+              <option value="零食">零食</option>
+            </select>
+          </div>
+          <div class="mb-2">
+            <label class="form-label">食物名称</label>
+            <input type="text" class="form-control" id="foodName" required>
+          </div>
+          <div class="mb-2">
+            <label class="form-label">时间</label>
+            <input type="datetime-local" class="form-control" id="mealTime">
+          </div>
+          <div class="mb-2">
+            <label class="form-label">备注</label>
+            <textarea class="form-control" id="note"></textarea>
+          </div>
+          <div class="mb-2">
+            <label class="form-label">图片</label>
+            <div class="d-flex gap-2">
+              <button type="button" class="btn btn-outline-primary" id="takePhotoBtn">拍照</button>
+              <button type="button" class="btn btn-outline-secondary" id="choosePhotoBtn">相册</button>
+            </div>
+            <img id="previewImg" class="img-fluid mt-2 d-none" />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">保存</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- Bootstrap JS & Icons -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.js"></script>
+  <!-- App JS -->
+  <script src="js/db.js"></script>
+  <script src="js/camera.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener('deviceready', function() {
+      if (window.cordova && window.cordova.plugins && window.cordova.plugins.permissions) {
+        var permissions = cordova.plugins.permissions;
+        permissions.requestPermissions(
+          [
+            permissions.CAMERA,
+            permissions.READ_EXTERNAL_STORAGE,
+            permissions.WRITE_EXTERNAL_STORAGE
+          ],
+          function(status) {
+            if (!status.hasPermission) {
+              alert('请授予相机和存储权限，否则无法正常使用拍照和选图功能。');
+            }
+          },
+          function() {
+            alert('权限申请失败，请手动到系统设置中授权。');
+          }
+        );
+      }
+    });
+  </script>
+</body>
+</html>
