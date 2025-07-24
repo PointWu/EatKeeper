@@ -2,27 +2,60 @@
 let selectedDate = new Date().toISOString().slice(0, 10);
 let currentImage = "";
 
-function appInit() {
-  initDB().then(() => {
-    renderCalendar();
-    loadRecords(selectedDate);
+function requestCameraPermissions(callback) {
+  if (window.cordova && cordova.plugins && cordova.plugins.permissions) {
+    var permissions = cordova.plugins.permissions;
+    permissions.requestPermissions(
+      [
+        permissions.CAMERA,
+        permissions.READ_EXTERNAL_STORAGE,
+        permissions.WRITE_EXTERNAL_STORAGE
+      ],
+      function(status) {
+        if (
+          status.hasPermission ||
+          (status.hasPermission === undefined && status[permissions.CAMERA] && status[permissions.READ_EXTERNAL_STORAGE])
+        ) {
+          callback && callback(true);
+        } else {
+          alert('请在系统设置中授权相机和存储权限，否则无法使用拍照和相册功能。');
+          callback && callback(false);
+        }
+      },
+      function() {
+        alert('权限请求失败，请在系统设置中授权相机和存储权限。');
+        callback && callback(false);
+      }
+    );
+  } else {
+    callback && callback(true); // 浏览器环境直接通过
+  }
+}
 
-    document.getElementById('add-btn').onclick = () => openRecordModal();
-    document.getElementById('recordForm').onsubmit = saveRecord;
-    document.getElementById('takePhotoBtn').onclick = () => {
-      if (window.Camera && window.navigator.camera) {
-        getPicture(Camera.PictureSourceType.CAMERA, setImage);
-      } else {
-        alert('摄像头功能不可用，请检查App权限和插件安装。');
-      }
-    };
-    document.getElementById('choosePhotoBtn').onclick = () => {
-      if (window.Camera && window.navigator.camera) {
-        getPicture(Camera.PictureSourceType.PHOTOLIBRARY, setImage);
-      } else {
-        alert('相册功能不可用，请检查App权限和插件安装。');
-      }
-    };
+function appInit() {
+  requestCameraPermissions(function(granted) {
+    if (!granted) return;
+    initDB().then(() => {
+      renderCalendar();
+      loadRecords(selectedDate);
+
+      document.getElementById('add-btn').onclick = () => openRecordModal();
+      document.getElementById('recordForm').onsubmit = saveRecord;
+      document.getElementById('takePhotoBtn').onclick = () => {
+        if (window.Camera && window.navigator.camera) {
+          getPicture(Camera.PictureSourceType.CAMERA, setImage);
+        } else {
+          alert('摄像头功能不可用，请检查App权限和插件安装。');
+        }
+      };
+      document.getElementById('choosePhotoBtn').onclick = () => {
+        if (window.Camera && window.navigator.camera) {
+          getPicture(Camera.PictureSourceType.PHOTOLIBRARY, setImage);
+        } else {
+          alert('相册功能不可用，请检查App权限和插件安装。');
+        }
+      };
+    });
   });
 }
 
@@ -47,7 +80,7 @@ function loadRecords(date) {
   getRecordsByDate(date).then(records => {
     let html = '';
     if (records.length === 0) {
-      html = '<div class="alert alert-info">暂无记录</div>';
+      html = '<div class="alert alert-info">你没记！！！给我坚持</div>';
     } else {
       html = records.map(r => `
         <div class="card mb-2">
