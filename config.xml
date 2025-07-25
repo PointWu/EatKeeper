@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="io.cordova.hellocordova" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="io.cordova.hellocordova" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:android="http://schemas.android.com/apk/res/android"
+>
     <name>eatKeeper</name>
     <description>一个记录饮食的app</description>
     <author email="wuyuhuiss@outlook.com">
@@ -8,4 +9,24 @@
     <content src="index.html" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
+    <icon src="www/img/logo.png" />
+    <platform name="android">
+        <icon src="www/img/logo.png" density="mdpi" />
+        <icon src="www/img/logo.png" density="hdpi" />
+        <icon src="www/img/logo.png" density="xhdpi" />
+        <icon src="www/img/logo.png" density="xxhdpi" />
+        <icon src="www/img/logo.png" density="xxxhdpi" />
+        <edit-config file="AndroidManifest.xml" mode="merge" target="/manifest">
+            <uses-permission android:name="android.permission.CAMERA" />
+            <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+            <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+        </edit-config>
+    </platform>
+    <platform name="ios">
+        <icon src="www/img/logo.png" width="60" height="60" />
+        <icon src="www/img/logo.png" width="76" height="76" />
+        <icon src="www/img/logo.png" width="120" height="120" />
+        <icon src="www/img/logo.png" width="152" height="152" />
+        <icon src="www/img/logo.png" width="180" height="180" />
+    </platform>
 </widget>
