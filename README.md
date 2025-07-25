@@ -3,13 +3,13 @@
 
 ##  打包apk
 
-```
+```bash
 cordova build android
 ```
 
 ## 本地运行
 
-```
- cordova run android
+```bash
+cordova run android
 
 ```
