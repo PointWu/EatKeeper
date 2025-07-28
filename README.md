@@ -3,8 +3,11 @@
 这是一个基于 Cordova 和 React 的饮食记录应用。
 
 ## 截图
+<div style="display:flex">
 <img src="./pic.png" style="width:30%"/>
 <img src="./pic2.png" style="width:30%"/>
+</div>
+
 
 ## 项目结构
 
