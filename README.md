@@ -1,11 +1,17 @@
 # 饮食记录应用
 
-这是一个基于 Cordova 和 React 的饮食记录应用。
+这是一个基于 Cordova 和 React 的饮食运动记录应用。
 
 ## 截图
 <div style="display:flex">
-<img src="./pic.png" style="width:30%"/>
-<img src="./pic2.png" style="width:30%"/>
+<img src="./饮食记录.jpg" style="width:250px;height:100%"/>
+<img src="./运动记录.jpg" style="width:250px;height:100%"/>
+</div>
+
+<div style="display:flex">
+<img src="./添加饮食记录.jpg" style="width:250px;height:100%"/>
+<img src="./添加运动记录.jpg" style="width:250px;height:100%"/>
+<img src="./日历查询.jpg" style="width:250px;height:100%"/>
 </div>
 
 
@@ -69,7 +75,7 @@ cordova build android
 ## 功能特性
 
 - 📅 日历视图选择日期
-- 🍽️ 添加饮食记录（早餐、午餐、晚餐、零食、饮品）
+- 🍽️ 添加饮食记录（早餐、午餐、晚餐、零食、饮品）/ 运动记录
 - 📸 拍照或选择图片
 - 💾 本地数据库存储
 - 📱 响应式设计，支持移动设备
